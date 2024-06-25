@@ -1,4 +1,4 @@
 venv/
 app/env
 .pyc
-how to remove pycache files from git
+__pycache__/
