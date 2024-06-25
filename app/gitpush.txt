@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    char commit_message[1000] = "";  // Buffer to store commit message
+    int i;
+
+
+    if (argc < 2) {
+        printf("Please provide a commit message.\n");
+        return 1;
+    }
+
+    // Concatenate all command-line arguments into a single commit message
+    for (i = 1; i < argc; i++) {
+        strcat(commit_message, argv[i]);
+        strcat(commit_message, " ");
+    }
+
+    // Print the final commit message (for demonstration purposes)
+    printf("Commit Message: %s\n", commit_message);
+
+    // Execute git commands (replace with system calls)
+    system("git add .");
+    char git_commit_command[1024];
+    sprintf(git_commit_command, "git commit -m \"%s\"", commit_message);
+    system(git_commit_command);
+    system("git push --force origin main");
+
+    return 0;
+}
