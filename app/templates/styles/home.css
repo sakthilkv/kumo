@@ -1,0 +1,85 @@
+:root {
+    --background-color: #1f2029;
+    --card-background-color: #1f2029;
+    --primary-color: lightblue;
+    --text-color: #ffffff;
+    --input-background-color: #223;
+    --input-border-color: #3c3c3c;
+    --button-background-color: #e93558;
+    --button-text-color: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 80px;
+    height: auto;
+}
+
+.hero {
+	margin-top: 70px;
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #282a36;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: lightblue;
+    color: #1f2029;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.content {
+    padding: 20px;
+}
+
+.content-section {
+    margin-bottom: 30px;
+}
+
+.content-section h2 {
+    color: lightblue;
+    margin-bottom: 10px;
+}
+
+.content-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}

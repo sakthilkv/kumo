@@ -26,11 +26,7 @@ body {
     margin: 0;
 }
 
-header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
+
 
 .logo {
     position: absolute;
@@ -124,7 +120,7 @@ header {
 }
 
 .btn-link:hover {
-    color: var(--button-background-color);
+    color: var(--primary-color);
 }
 
 .remember-me {
@@ -176,3 +172,26 @@ header {
     display: block;
 }
 
+
+.signup {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.signup span {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.signup a {
+  color: var(--primary-color);
+  display: inline-block;
+  margin-left: 2px;
+  text-decoration: none;
+  transition: color .3s ease-out;
+  font-size: 14px;
+}
+
+.signup a:hover {
+  color: var(--button-background-color);
+}
