@@ -15,8 +15,10 @@
     box-sizing: border-box;
 }
 
+
 body {
-    background-color: var(--background-color);
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../assets/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: var(--text-color);
     font-family: 'Nunito', sans-serif;
     display: flex;
@@ -24,13 +26,10 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
+    background-position: center top 60px; /* Adjust the value (60px) as needed */
 }
 
-header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
 
 .logo {
     position: absolute;
@@ -54,7 +53,7 @@ header {
     padding: 1.9rem 1.2rem;
     text-align: center;
     box-shadow: 0 8px 24px 0 black;
-    background: var(--card-background-color);
+    background: rgba(31, 32, 41,0.5);
     position: relative;
     z-index: 1;
 }
