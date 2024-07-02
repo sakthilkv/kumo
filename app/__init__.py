@@ -2,6 +2,7 @@ from flask import Flask
 
 def create_app():   
     app = Flask(__name__, template_folder='templates', static_folder='static')
+    app.secret_key = '21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJ'
     from .routes.app import main as main_blueprint
     app.register_blueprint(main_blueprint)
     return app

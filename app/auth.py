@@ -1,6 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, auth
-from config import firebase_admin_config,firebase_client_config
+from .config import firebase_admin_config,firebase_client_config
 import json,requests
 cred = credentials.Certificate(firebase_admin_config)
 firebase_admin.initialize_app(cred)
@@ -9,32 +9,38 @@ def check_if_user_exists(email):
     try:
         user = auth.get_user_by_email(email)
         return True
-    except auth.UserNotFoundError:
-        return False
     except Exception as e:
+        print(f"Error creating user: {e}")
         return None
+
 
 def register(email, password):
     try:
-        user = auth.create_user(
-            email=email,
-            password=password
-        )
-
+        user = auth.create_user(email=email, password=password)
         return user
-    except firebase_admin.auth.AuthError as e:
+    except Exception as e:
+        print(f"Error creating user: {e}")
         return None
+
 
 
 def login(email, password):
+    url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebase_client_config['apiKey']}"
+    payload = {
+        'email': email,
+        'password': password,
+        'returnSecureToken': True
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
     try:
-        user = auth.get_user_by_email(email)
-        return user
-    except firebase_admin.auth.UserNotFoundError:
-        print('User not found')
-        return None
-    except firebase_admin.auth.AuthError as e:
-        print(f'Error retrieving user: {e}')
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response.raise_for_status()
+        data = response.json()
+        return data
+    except Exception as err:
         return None
 
 def send_password_reset_email(email):
@@ -84,4 +90,3 @@ def is_email_verified(email):
     except Exception as e:
         return False
 
-print(login("sakthilk13072005@gmail.com","87654321"))
