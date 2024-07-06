@@ -4,42 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kumo - Your Ultimate Anime Tracker</title>
-    <link rel="stylesheet" href="styles/home.css">
-      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles/navbar.css">
+    <link rel="icon" href="{{ url_for('static', filename='assets/logo.png') }}" type="image/png">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/home.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/navbar.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<body>
 
-        <nav class="navbar">
+  <nav class="navbar">
         <div class="navbar-left">
-            <img src="assets/logo.png" alt="Logo" class="logo">
+            <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo" class="logo">
             <span class="site-name">Kumo</span>
         </div>
         <div class="navbar-right">
-            <a href="#" class="nav-link">Home</a>
+            <a href="/home" class="nav-link">Home</a>
             <a href="#" class="nav-link">Dashboard</a>
-            <a href="#" class="nav-link">Profile</a>
+            <a href="/login" class="nav-link">Profile</a>
         </div>
     </nav>
-    <main>
-        <section class="hero">
-            <h1>Welcome to Kumo - Your Ultimate Anime Tracker</h1>
-            <p>Weebs weaving the web, one episode at a time.</p>
-            <a href="#" class="cta-button">Get Started</a>
-        </section>
-        <section class="content">
-            <div class="content-section">
-                <h2>Track Your Favorite Shows Effortlessly</h2>
-                <p>Kumo provides a clean and straightforward interface for you to track all your favorite anime shows. Stay updated with the latest episodes and never miss a beat. Whether you're a casual viewer or a hardcore otaku, Kumo is designed to cater to your anime tracking needs with ease.</p>
-            </div>
-            <div class="content-section">
-                <h2>Discover Top Anime Shows and Movies</h2>
-                <p>Explore a vast database of anime shows and movies, meticulously organized for your convenience. With Kumo's intuitive grid layout, finding what to watch next is as enjoyable as watching itself. From the most popular series to hidden gems, Kumo has it all.</p>
-            </div>
-            <div class="content-section">
-                <h2>Join the Kumo Community</h2>
-                <p>Join a thriving community of anime enthusiasts who share your passion. Engage with fellow weebs, discuss your favorite series, and get recommendations tailored to your tastes. With Kumo, you're not just tracking anime, you're connecting with a world of fans.</p>
-            </div>
-        </section>
-    </main>
+    <div class="grid-container" id="shows-grid"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    fetch('/shows')
+        .then(response => response.json())
+        .then(data => {
+            const gridContainer =    document.getElementById('shows-grid');
+            
+            if (!Array.isArray(data)) {
+                console.error('Expected array, received:', data);
+                return;
+            }
+            
+            data.forEach(show => {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                gridItem.innerHTML = `
+                    <img src="${show.poster}" alt="${show.name}">
+                    <h3>${show.name}</h3>
+                    <p>${show.status}</p>
+                `;
+                gridContainer.appendChild(gridItem);
+            });
+        })
+        .catch(error => console.error('Error fetching shows:', error));
+});
+
+    </script>
 </body>
 </html>

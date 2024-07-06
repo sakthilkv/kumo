@@ -1,8 +1,9 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 import uuid
-from .config import accnt_status
-from .models import User_DB,engine
+from .config import accnt_status,status
+from .models import User_DB,Anime_DB,engine
+#from routes.utils import jtools as jt
 Session = sessionmaker(bind=engine)
 
 class Users:
@@ -58,3 +59,53 @@ class Users:
 
     def get_user_data(self):
         pass
+
+class AnimeList:
+    def create_entry(self,user_id,anime_id,anime,status,episode=None,review=None):
+        session = Session()
+        try:
+            new_entry = Anime_DB(
+                user_id = user_id,
+                anime_id = anime_id,
+                name = anime[0],
+                poster = anime[1],
+                status = status,
+                episodes = episode,
+                review = review
+            )
+            session.add(new_entry)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            return None
+        finally:
+            session.close()
+
+    def get_user_animes(self,user_id):
+        session = Session()
+        try:
+            user_animes = session.query(Anime_DB).filter_by(user_id=user_id).all()
+
+            if not user_animes:
+                return None
+
+            user_animes_list = []
+            for anime in user_animes:
+                user_animes_list.append({
+                    "id": anime.id,
+                    "user_id": anime.user_id,
+                    "anime_id": anime.anime_id,
+                    "name": anime.name,
+                    "poster": anime.poster,
+                    "status": anime.status,
+                    "episodes": anime.episodes,
+                    "review": anime.review
+                })
+
+            return user_animes_list
+
+        except Exception as e:
+            return None
+        
+        finally:
+            session.close()

@@ -9,77 +9,52 @@
     --button-text-color: #fff;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
     font-family: 'Nunito', sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
-}
-header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    background-position: center top 60px;
+    background-color: var(--background-color);
 }
 
-.logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 80px;
-    height: auto;
-}
 
-.hero {
-	margin-top: 70px;
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #282a36;
-}
-
-.hero h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.cta-button {
-    background-color: lightblue;
-    color: #1f2029;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-.content {
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
     padding: 20px;
+    width: 80%;
+    max-width: 1200px;
+    margin: 80px auto 20px; 
 }
 
-.content-section {
-    margin-bottom: 30px;
+.grid-item {
+    background-color: var(--card-background-color);
+    color: var(--text-color);
+    border: 1px solid var(--input-border-color);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.content-section h2 {
-    color: lightblue;
-    margin-bottom: 10px;
+.grid-item img {
+    max-width: 100%;
+    height: auto; 
+    max-height: 250px; 
+    border-radius: 5px;
+    object-fit: contain;
+}
+.grid-item h3 {
+    margin: 10px 0 5px;
+    font-size: 1.2em;
 }
 
-.content-section p {
-    font-size: 1.1em;
-    line-height: 1.6;
+.grid-item p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
 }
