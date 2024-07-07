@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func, Boolean, Float
 engine = create_engine('sqlite:///kumo.db', echo=True)
 Base = declarative_base()
 
@@ -18,7 +18,7 @@ class User_DB(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     account_status = Column(Integer, nullable=False)
 
-class Anime_DB(Base):
+class Users_Anime_DB(Base):
     __tablename__ = 'users_anime'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -29,5 +29,19 @@ class Anime_DB(Base):
     status = Column(String, nullable=False)
     episodes = Column(Integer, nullable=True)
     review = Column(String, nullable=True)
+
+class Anime_DB(Base):
+    __tablename__ = "animes"
+
+    id = Column(Integer, primary_key=True)
+    title_jp = Column(String)
+    title_en = Column(String)
+    poster = Column(String)
+    large_poster = Column(String)
+    title_type = Column(String)
+    airing = Column(Boolean)
+    score = Column(Float)
+    year = Column(Integer)
+    genres = Column(String)
 
 Base.metadata.create_all(engine) 

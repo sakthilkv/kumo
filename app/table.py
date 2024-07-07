@@ -2,7 +2,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 import uuid
 from .config import accnt_status,status
-from .models import User_DB,Anime_DB,engine
+from .models import User_DB,Anime_DB,Users_Anime_DB,engine
 #from routes.utils import jtools as jt
 Session = sessionmaker(bind=engine)
 
@@ -60,11 +60,12 @@ class Users:
     def get_user_data(self):
         pass
 
-class AnimeList:
+class UserAnime:
+
     def create_entry(self,user_id,anime_id,anime,status,episode=None,review=None):
         session = Session()
         try:
-            new_entry = Anime_DB(
+            new_entry = Users_Anime_DB(
                 user_id = user_id,
                 anime_id = anime_id,
                 name = anime[0],
@@ -84,7 +85,7 @@ class AnimeList:
     def get_user_animes(self,user_id):
         session = Session()
         try:
-            user_animes = session.query(Anime_DB).filter_by(user_id=user_id).all()
+            user_animes = session.query(Users_Anime_DB).filter_by(user_id=user_id).all()
 
             if not user_animes:
                 return None
@@ -109,3 +110,29 @@ class AnimeList:
         
         finally:
             session.close()
+
+class Anime:
+
+    def add_anime_metadata(self,anime_metadata):
+        session = Session()
+        genres_str = ', '.join(anime_metadata.genres) if anime_metadata.genres else None
+        anime = Anime_DB(
+            id=anime_metadata.anime_id,
+            title_jp=anime_metadata.title_jp,
+            title_en=anime_metadata.title_en,
+            image_url=anime_metadata.poster,
+            large_image_url=anime_metadata.large_poster,
+            title_type=anime_metadata.title_type,
+            airing=anime_metadata.airing,
+            score=anime_metadata.score,
+            year=anime_metadata.year,
+            genres=genres_str
+        )
+        session.add(anime)
+        session.commit()
+
+    def check_animeid(self,id):
+        session = Session()
+        return session.query(Anime_DB).filter_by(id=id).first()
+
+    
