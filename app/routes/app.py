@@ -3,7 +3,7 @@ from ..table import Users, Anime, UserAnime
 from ..auth import register,login
 from .utils import jtools as jt
 from ..config import status
-main = Blueprint('main', __name__)
+main = Blueprint('main',__name__)
 
 userdb = Users()
 animedb = Anime()
@@ -62,8 +62,16 @@ def home():
     else:
         return redirect('/login')
 
-@main.route('/add/<int:id>')
-def add_anime(id):
+@main.route('/search')
+def search():
+    if 'user_token' in session:
+        return render_template('search.html')
+    else:
+        return redirect('/login')
+
+@main.route('/add', methods=['GET'])
+def add_anime():
+    id = request.args.get('mal_id')
     details = jt.AnimeMetadata(id)
     try:
         anime = animedb.check_animeid(id)
@@ -74,7 +82,7 @@ def add_anime(id):
             animedb.add_anime_metadata(details)
             uanimedb.create_entry(session['user_id'], id, [details.title_en, details.poster], status[1])
             
-        return jsonify({"message": "Anime added successfully"}), 200
+        return redirect('/home')
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
